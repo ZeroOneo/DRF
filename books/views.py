@@ -23,7 +23,7 @@ class BooksView(View):
     def post(self, request):
 
         json_data = json.loads(request.body.decode())
-        print(json_data)
+
         book = BookInfo(**json_data)
         book.save()
 
