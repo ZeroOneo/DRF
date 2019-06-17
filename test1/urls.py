@@ -15,8 +15,28 @@ Including another URLconf
 """
 from django.conf.urls import url,include
 from django.contrib import admin
+from rest_framework.routers import SimpleRouter, DefaultRouter
+from rest_framework.documentation import include_docs_urls
+from books.views import BookModelViewSet
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^', include("books.urls")),
+    url(r'^docs/', include_docs_urls(title='My API title')),
+    # url(r'^', include("books.urls")),
+
+
+
 ]
+
+# 1 创建路由器对象
+# 不带根视图
+router = SimpleRouter()
+
+# 带根视图
+# router = DefaultRouter()
+
+# 2 注册视图集
+router.register(prefix="books", viewset=BookModelViewSet, base_name="books")
+
+# 3 添加到主路由
+urlpatterns += router.urls
